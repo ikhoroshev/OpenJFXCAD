@@ -1,0 +1,20 @@
+
+apply plugin:'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'eu.mihosoft.vrl.jcsg:jcsg:0.5.2'
+    compile 'org.codehaus.groovy:groovy:2.4.9'
+    compile 'eu.mihosoft.vrl:vrl:0.4.3.1.0'
+}
+
+apply plugin:'application'
+
+mainClassName = "com.javafx.experiments.jfx3dviewer.Jfx3dViewerApp"
+
+jar {
+    manifest.attributes("Main-Class": mainClassName)
+}

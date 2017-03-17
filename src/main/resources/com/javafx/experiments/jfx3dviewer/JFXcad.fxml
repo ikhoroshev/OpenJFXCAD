@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.VBox?>
+
+<!--<Pane fx:id="JFXcad" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox>
+         <children>
+            <ButtonBar>
+              <buttons>
+                <Button mnemonicParsing="false" text="Execute" />
+              </buttons>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </ButtonBar>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+               <content>
+                  <TextArea promptText="code here" wrapText="true" />
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </children>
+</Pane>-->
+
+<VBox fx:id="jfxcadPanel" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.experiments.jfx3dviewer.CadController">
+    <children>
+        <ButtonBar>
+            <buttons>
+                <Button mnemonicParsing="false" onAction="#buttonExecute" text="Execute" />
+            </buttons>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+        </ButtonBar>
+        <TextArea fx:id="sourceCodeTextArea" prefHeight="1000.0" promptText="code here" wrapText="true" />
+    </children>
+</VBox>
