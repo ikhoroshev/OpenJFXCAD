@@ -29,12 +29,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.javafx.experiments.jfx3dviewer;
+package net.khoroshev.ojfxcad;
 
 import com.javafx.experiments.exporters.fxml.FXMLExporter;
 import com.javafx.experiments.exporters.javasource.JavaSourceExporter;
 import com.javafx.experiments.importers.Importer3D;
 import com.javafx.experiments.importers.Optimizer;
+import com.javafx.experiments.jfx3dviewer.ContentModel;
+import com.javafx.experiments.jfx3dviewer.Jfx3dViewerApp;
+import com.javafx.experiments.jfx3dviewer.SessionManager;
 import eu.mihosoft.jcsg.CSG;
 import eu.mihosoft.jcsg.MeshContainer;
 import groovy.lang.Binding;
@@ -71,8 +74,10 @@ import javafx.util.Pair;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -89,10 +94,16 @@ public class CadController implements Initializable {
     private SessionManager sessionManager = SessionManager.getSessionManager();
     @FXML
     private VBox jfxcadPanel;
+    private TextArea sourceCodeTextArea;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        sourceCodeTextArea = (TextArea)jfxcadPanel.lookup("#sourceCodeTextArea");
+        StringBuffer code = new StringBuffer();
+        new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("bait.groovy"))).lines().forEach(s -> {
+            code.append(s).append("\n");
+        });
+        sourceCodeTextArea.setText(code.toString());
     }
 
 
@@ -107,24 +118,19 @@ public class CadController implements Initializable {
     }
 
     public void buttonExecute(ActionEvent event) {
-        TextArea sourceCodeTextArea = (TextArea)jfxcadPanel.lookup("#sourceCodeTextArea");
         compile(sourceCodeTextArea.getText());
     }
 
     private void compile(String code) {
-        //csgObject = null;
-        //clearLog();
-        //viewGroup.getChildren().clear();
         CSG csgObject = null;
         try {
             CompilerConfiguration cc = new CompilerConfiguration();
             cc.addCompilationCustomizers(
                     new ImportCustomizer().
-                            /*addStarImports("eu.mihosoft.vrl.v3d",
-                                    "eu.mihosoft.vrl.v3d.samples").
-                            addStaticStars("eu.mihosoft.vrl.v3d.Transform")*/
                             addStarImports("eu.mihosoft.jcsg",
-                                    "eu.mihosoft.jcsj.samples"));
+                                    "eu.mihosoft.jcsj.samples",
+                                    "eu.mihosoft.vvecmath")
+                                    .addStaticStars("eu.mihosoft.vvecmath.Transform"));
             GroovyShell shell = new GroovyShell(Jfx3dViewerApp.class.getClassLoader(),
                     new Binding(), cc);
             Script script = shell.parse(code);
@@ -134,23 +140,10 @@ public class CadController implements Initializable {
                 csgObject = csg;
                 MeshContainer meshContainer = csg.toJavaFXMesh();
                 final MeshView meshView = meshContainer.getAsMeshViews().get(0);
-                /*setMeshScale(meshContainer,
-                        viewContainer.getBoundsInLocal(), meshView);*/
                 PhongMaterial m = new PhongMaterial(Color.RED);
                 meshView.setCullFace(CullFace.NONE);
                 meshView.setMaterial(m);
                 setContent(meshView, null);
-                /*viewGroup.layoutXProperty().bind(
-                        viewContainer.widthProperty().divide(2));
-                viewGroup.layoutYProperty().bind(
-                        viewContainer.heightProperty().divide(2));
-                viewContainer.boundsInLocalProperty().addListener(
-                        (ov, oldV, newV) -> {
-                            setMeshScale(meshContainer, newV, meshView);
-                        });
-                VFX3DUtil.addMouseBehavior(meshView,
-                        viewContainer, MouseButton.PRIMARY);
-                viewGroup.getChildren().add(meshView);*/
             } else {
                 System.out.println(">> no CSG object returned :(");
             }

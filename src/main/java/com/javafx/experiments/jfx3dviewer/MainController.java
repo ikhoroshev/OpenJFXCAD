@@ -80,6 +80,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.geometry.BoundingBox;
+import net.khoroshev.ojfxcad.CadController;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 
@@ -124,7 +125,7 @@ public class MainController implements Initializable {
             splitPane.getItems().addAll(new SubSceneResizer(contentModel.subSceneProperty(), navigationPanel), settingsPanel);
             splitPane.getDividers().get(0).setPosition(1);
             // LOAD & SETUP JFXCAD PANEL
-            jfxcadPanel = FXMLLoader.load(MainController.class.getResource("JFXcad.fxml"));
+            jfxcadPanel = FXMLLoader.load(CadController.class.getResource("JFXcad.fxml"));
             settingsPanel.getPanes().add(new TitledPane("JFXcad", jfxcadPanel));
         } catch (IOException e) {
             e.printStackTrace();
