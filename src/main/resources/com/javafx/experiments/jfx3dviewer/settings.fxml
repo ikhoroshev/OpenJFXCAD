@@ -76,8 +76,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <ColorPicker fx:id="backgroundColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Wireframe" GridPane.columnIndex="0" GridPane.rowIndex="4" />
             <CheckBox fx:id="wireFrameCheckbox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Subdivision level" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-            <HBox prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Label text="show XY grid" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+            <CheckBox fx:id="showXYGridCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="show XZ grid" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+            <CheckBox fx:id="showXZGridCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="show YZ grid" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+            <CheckBox fx:id="showYZGridCheckBox" mnemonicParsing="false" text="" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="Subdivision level" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+            <HBox prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
               <children>
                 <ToggleButton mnemonicParsing="false" selected="true" styleClass="left-pill" text="None" userData="0">
                   <toggleGroup>
@@ -89,8 +95,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <ToggleButton mnemonicParsing="false" styleClass="right-pill" text="3" toggleGroup="$subdivisionLevelGroup" userData="3" />
               </children>
             </HBox>
-            <Label text="Creases (Boundary Rules)" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-            <HBox prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <Label text="Creases (Boundary Rules)" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+            <HBox prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
               <children>
                 <ToggleButton mnemonicParsing="false" selected="true" styleClass="left-pill" text="Edges">
                   <toggleGroup>
@@ -113,8 +119,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 </ToggleButton>
               </children>
             </HBox>
-            <Label text="Smooth Texture Map" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-            <HBox prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+            <Label text="Smooth Texture Map" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+            <HBox prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
               <children>
                 <ToggleButton mnemonicParsing="false" selected="true" styleClass="left-pill" text="None">
                   <toggleGroup>

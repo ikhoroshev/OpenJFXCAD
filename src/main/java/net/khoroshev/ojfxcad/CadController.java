@@ -47,6 +47,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -73,7 +74,11 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -94,13 +99,20 @@ public class CadController implements Initializable {
     private SessionManager sessionManager = SessionManager.getSessionManager();
     @FXML
     private VBox jfxcadPanel;
-    private TextArea sourceCodeTextArea;
+    private RSyntaxTextArea sourceCodeTextArea;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sourceCodeTextArea = (TextArea)jfxcadPanel.lookup("#sourceCodeTextArea");
+        //editorContainer
+        SwingNode editorContainer = (SwingNode) jfxcadPanel.lookup("#editorContainer");
+        sourceCodeTextArea = new RSyntaxTextArea();
+        sourceCodeTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_GROOVY);
+        sourceCodeTextArea.setCodeFoldingEnabled(true);
+        RTextScrollPane sp = new RTextScrollPane(sourceCodeTextArea);
+        sourceCodeTextArea.setPreferredSize(new Dimension(800, 800));
+        editorContainer.setContent(sp);
         StringBuffer code = new StringBuffer();
-        new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("bait.groovy"))).lines().forEach(s -> {
+        new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("start.groovy"))).lines().forEach(s -> {
             code.append(s).append("\n");
         });
         sourceCodeTextArea.setText(code.toString());

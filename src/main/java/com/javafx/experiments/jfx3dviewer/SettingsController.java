@@ -111,6 +111,10 @@ public class SettingsController implements Initializable {
     public Slider farClipSlider;
     public Label nearClipLabel;
     public Label farClipLabel;
+    public CheckBox showXYGridCheckBox;
+    public CheckBox showXZGridCheckBox;
+    public CheckBox showYZGridCheckBox;
+
 
     @Override public void initialize(URL location, ResourceBundle resources) {
         // keep one pane open always
@@ -122,6 +126,7 @@ public class SettingsController implements Initializable {
         // wire up settings in OPTIONS
         contentModel.msaaProperty().bind(msaaCheckBox.selectedProperty());
         contentModel.showAxisProperty().bind(showAxisCheckBox.selectedProperty());
+        contentModel.showXYGridProperty().bind(showXYGridCheckBox.selectedProperty());
         contentModel.yUpProperty().bind(yUpCheckBox.selectedProperty());
         backgroundColorPicker.setValue((Color)contentModel.getSubScene().getFill());
         contentModel.getSubScene().fillProperty().bind(backgroundColorPicker.valueProperty());
@@ -301,6 +306,7 @@ public class SettingsController implements Initializable {
         SessionManager sessionManager = SessionManager.getSessionManager();
 
         sessionManager.bind(showAxisCheckBox.selectedProperty(), "showAxis");
+        sessionManager.bind(showXYGridCheckBox.selectedProperty(), "showXYGrid");
         sessionManager.bind(yUpCheckBox.selectedProperty(), "yUp");
         sessionManager.bind(msaaCheckBox.selectedProperty(), "msaa");
         sessionManager.bind(wireFrameCheckbox.selectedProperty(), "wireFrame");

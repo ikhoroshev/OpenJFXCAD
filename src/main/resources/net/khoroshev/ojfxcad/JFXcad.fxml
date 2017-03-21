@@ -28,6 +28,7 @@
    </children>
 </Pane>-->
 
+<?import javafx.embed.swing.SwingNode?>
 <VBox fx:id="jfxcadPanel" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.khoroshev.ojfxcad.CadController">
     <children>
         <ButtonBar>
@@ -38,6 +39,7 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
         </ButtonBar>
-        <TextArea fx:id="sourceCodeTextArea" prefHeight="1000.0" promptText="code here" wrapText="true" />
+        <!--<TextArea fx:id="sourceCodeTextArea" prefHeight="1000.0" promptText="code here" wrapText="true" />-->
+        <SwingNode fx:id="editorContainer" />
     </children>
 </VBox>

@@ -45,10 +45,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Box;
-import javafx.scene.shape.DrawMode;
-import javafx.scene.shape.MeshView;
-import javafx.scene.shape.Sphere;
+import javafx.scene.shape.*;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
@@ -81,6 +78,7 @@ public class ContentModel {
     private ObjectProperty<Node> content = new SimpleObjectProperty<>();
     private AutoScalingGroup autoScalingGroup = new AutoScalingGroup(2);
     private Box xAxis, yAxis, zAxis;
+    private Group xyGrid;
     private Sphere xSphere, ySphere, zSphere;
     private AmbientLight ambientLight = new AmbientLight(Color.DARKGREY);
     private PointLight light1 = new PointLight(Color.WHITE);
@@ -139,6 +137,18 @@ public class ContentModel {
                 autoScalingGroup.getChildren().removeAll(xSphere, ySphere, zSphere);
                 //root3D.getChildren().removeAll(xAxis, yAxis, zAxis);
                 //root3D.getChildren().removeAll(xSphere, ySphere, zSphere);
+            }
+        }
+    };
+    private SimpleBooleanProperty showXYGrid = new SimpleBooleanProperty(false) {
+        @Override
+        protected void invalidated() {
+            System.out.println("showXYGrid invalidated " + get());
+            if (get()) {
+                if(xyGrid == null) createGrids();
+                autoScalingGroup.getChildren().addAll(xyGrid);
+            } else {
+                autoScalingGroup.getChildren().removeAll(xyGrid);
             }
         }
     };
@@ -725,5 +735,31 @@ public class ContentModel {
         xAxis.setMaterial(redMaterial);
         yAxis.setMaterial(greenMaterial);
         zAxis.setMaterial(blueMaterial);
+    }
+
+    private void createGrids() {
+        final PhongMaterial grayMaterial = new PhongMaterial();
+        grayMaterial.setDiffuseColor(Color.DARKGRAY);
+        grayMaterial.setSpecularColor(Color.GRAY);
+        int count = 400;
+        xyGrid = new Group();
+        for (int i = 0; i < count; i++) {
+            Cylinder cylinder = new Cylinder(0.05D, 200.0D);
+            cylinder.setTranslateY(i - count/2);
+            xyGrid.getChildren().add(cylinder);
+        }
+        //TODO
+    }
+
+    public boolean getShowXYGrid() {
+        return showXYGrid.get();
+    }
+
+    public void setShowXYGrid(boolean show) {
+        showXYGrid.set(show);
+    }
+
+    public SimpleBooleanProperty showXYGridProperty() {
+        return showXYGrid;
     }
 }
