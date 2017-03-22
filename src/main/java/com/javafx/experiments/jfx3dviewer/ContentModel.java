@@ -34,6 +34,7 @@ package com.javafx.experiments.jfx3dviewer;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.geometry.Point3D;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -57,6 +58,9 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 3D Content Model for Viewer App. Contains the 3D scene and everything related to it: light, cameras etc.
@@ -743,11 +747,18 @@ public class ContentModel {
         grayMaterial.setSpecularColor(Color.GRAY);
         int count = 400;
         xyGrid = new Group();
+        List<Cylinder> grid = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            Cylinder cylinder = new Cylinder(0.05D, 200.0D);
-            cylinder.setTranslateY(i - count/2);
-            xyGrid.getChildren().add(cylinder);
+            Cylinder cylinder = new Cylinder(i % 10 == 0 ? 0.03D : 0.01D, 200.0D);
+            int translate = i - count / 2;
+            cylinder.setTranslateX(translate);
+            Cylinder ortoCylinder = new Cylinder(i % 10 == 0 ? 0.03D : 0.01D, 200.0D);
+            ortoCylinder.getTransforms().add(new Rotate(90, new Point3D(0,0,1)));
+            ortoCylinder.setTranslateY(translate);
+            grid.add(cylinder);
+            grid.add(ortoCylinder);
         }
+        xyGrid.getChildren().addAll(grid);
         //TODO
     }
 
